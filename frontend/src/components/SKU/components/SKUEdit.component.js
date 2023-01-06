@@ -1,23 +1,50 @@
 import React, {useState, useEffect} from 'react';
+import { useParams } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
 import axios from 'axios';
 
-const CreateSKU = () => {
-    const [skuName, setSkuName] = useState('');
-    const [skuMsrp, setSkuMsrp] = useState('');
-    const [skuStyle, setSkuStyle] = useState('');
-    const [skuColor, setSkuColor] = useState('');
-    const [skuSeason, setSkuSeason] = useState('');
-    const [skuHasSize, setSkuHasSize] = useState(false);
+const EditSKU = () => {
+    const { sku_id } = useParams();
+    const [sku, setSku] = useState({
+        name: '',
+        msrp: 0,
+        style: '',
+        color: '',
+        season: '',
+        hasSize: false,
+    })
+    const [skuName, setSkuName] = useState(sku.name);
+    const [skuMsrp, setSkuMsrp] = useState(sku.msrp);
+    const [skuStyle, setSkuStyle] = useState(sku.style);
+    const [skuColor, setSkuColor] = useState(sku.color);
+    const [skuSeason, setSkuSeason] = useState(sku.season);
+    const [skuHasSize, setSkuHasSize] = useState(sku.hasSize);
     const [sizes, setSizes] = useState([]);
-    const [selectedSizes, setSelectedSizes] = useState([]);
-    const [skuId, setSkuId] = useState('');
+    const [selectedSizes, setSelectedSizes] = useState('');
+    const [skuId, setSkuId] = useState('')
 
     const getSizes = () => {
         axios.get('/size/sizes').then(res => setSizes(res.data));
-    };
+    }
+
+    const getSku = () => {
+        axios.get(`/sku/${sku_id}`).then(res => {
+            setSkuName(res.data.name);
+            setSkuMsrp(res.data.msrp);
+            setSkuStyle(res.data.style);
+            setSkuColor(res.data.color);
+            setSkuSeason(res.data.season);
+            setSkuHasSize(res.data.hasSize);
+            setSkuId(res.data.sku_id);
+            if (res.data.hasSize) {
+                const sizes = []
+                res.data.associatedSizes.forEach(sku => sizes.push(sku.Size.id))
+                setSelectedSizes(sizes)
+            }
+        })
+    }
     
     const onSelectedSizesChange = (target) => {
         if (target.checked) {
@@ -29,7 +56,7 @@ const CreateSKU = () => {
     }
 
     const onClick = () => {
-        axios.post('/sku/create', {
+        axios.put(`/sku/edit/${sku_id}`, {
             name: skuName,
             msrp: skuMsrp,
             style: skuStyle,
@@ -37,7 +64,8 @@ const CreateSKU = () => {
             season: skuSeason,
             sizes: selectedSizes,
             skuHasSize: skuHasSize,
-            skuId: skuId,
+            sku_id: skuId,
+
         }).then(res => {
             console.log(res)
         })
@@ -45,12 +73,14 @@ const CreateSKU = () => {
 
     useEffect(() => {
         getSizes();
-        
-    }, [])
+        getSku();
+    }, []);
+
+    console.log(selectedSizes)
 
     return(
         <>
-            <h3>You are now creating a SKU</h3>
+            
             <Form>
                 <Form.Group className="mb-3" controlId='formSkuName'>
                     <Form.Label>Name</Form.Label>
@@ -77,11 +107,11 @@ const CreateSKU = () => {
                     <Form.Control value={skuSeason} onChange={e => setSkuSeason(e.target.value)} type='text' />
                 </Form.Group>
                 <Form.Group>
-                    <Form.Check type='switch' label='Does your Sku have a size chart?' value={skuHasSize} onChange={(e) => setSkuHasSize(e.target.checked)} />
+                    <Form.Check type='switch' label='Does your Sku have a size chart?' checked={skuHasSize} value={skuHasSize} onChange={(e) => setSkuHasSize(e.target.checked)} />
                 </Form.Group>
-                {skuHasSize && sizes.map(size => <Form.Check value={size.id} label={size.size} key={size.id} onChange={(e) => onSelectedSizesChange(e.target)} />)}
+                {skuHasSize && sizes.map(size => <Form.Check checked={selectedSizes.some((strSize) => strSize == size.id )} value={size.id} label={size.size} key={size.id} onChange={(e) => onSelectedSizesChange(e.target)} />)}
                 <Button onClick={onClick}>
-                    Create
+                    Edit
                 </Button>
             </Form>
 
@@ -89,4 +119,4 @@ const CreateSKU = () => {
     )
 }
 
-export default CreateSKU;
+export default EditSKU;
