@@ -33,6 +33,7 @@ const ViewSKUS = () => {
             <TableCell align="right">Style</TableCell>
             <TableCell align="right">Color</TableCell>
             <TableCell align="right">Season</TableCell>
+            <TableCell align="right">Total Inventory</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

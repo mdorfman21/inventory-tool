@@ -9,6 +9,7 @@ import CreateSKU from "./components/SKU/components/SKUCreate.component";
 import ViewSKUS from "./components/SKU/components/SKUView.component";
 import EditSKU from "./components/SKU/components/SKUEdit.component";
 import CreateSize from "./components/Size/SizeCreate.component";
+import CreateInventory from "./components/Inventory/create.component";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
   {
     path: "/size/create",
     element: <CreateSize />,
+  },
+  {
+    path: "/new/inventory/:id",
+    element: <CreateInventory />,
   },
 ]);
 

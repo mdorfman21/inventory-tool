@@ -1,28 +1,31 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import Box from '@mui/material/Box';
-import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-
+import * as React from "react";
+import PropTypes from "prop-types";
+import Box from "@mui/material/Box";
+import Collapse from "@mui/material/Collapse";
+import IconButton from "@mui/material/IconButton";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import Button from "react-bootstrap/Button";
+import { Link } from "react-router-dom";
 
 const Row = (props) => {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
-  console.log(row)
+  console.log(row);
+
+  const addInventoryClick = () => {};
 
   return (
     <React.Fragment>
-      <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+      <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
         <TableCell>
           <IconButton
             aria-label="expand row"
@@ -39,6 +42,7 @@ const Row = (props) => {
         <TableCell align="right">{row.style}</TableCell>
         <TableCell align="right">{row.color}</TableCell>
         <TableCell align="right">{row.season}</TableCell>
+        <TableCell align="right">total inventory</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -51,9 +55,7 @@ const Row = (props) => {
                 <TableHead>
                   <TableRow>
                     <TableCell>Size</TableCell>
-                    <TableCell>Inventory</TableCell>
-                    {/* <TableCell align="right">Amount</TableCell>
-                    <TableCell align="right">Total price ($)</TableCell> */}
+                    <TableCell align="right">Inventory</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -63,6 +65,18 @@ const Row = (props) => {
                         {assSize.Size.size}
                       </TableCell>
                       <TableCell>{assSize.size}</TableCell>
+                      <TableCell>
+                        {assSize.InventoryId ? (
+                          ""
+                        ) : (
+                          <Button>
+                            <Link to={`/new/inventory/${assSize.id}`}>
+                              Add Inventory
+                            </Link>
+                          </Button>
+                        )}
+                      </TableCell>
+
                       {/* <TableCell align="right">{historyRow.amount}</TableCell>
                       <TableCell align="right">
                         {Math.round(historyRow.amount * row.price * 100) / 100}
@@ -77,6 +91,6 @@ const Row = (props) => {
       </TableRow>
     </React.Fragment>
   );
-}
+};
 
-export default Row
+export default Row;

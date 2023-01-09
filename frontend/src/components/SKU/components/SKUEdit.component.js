@@ -7,20 +7,12 @@ import axios from "axios";
 
 const EditSKU = () => {
   const { sku_id } = useParams();
-  const [sku, setSku] = useState({
-    name: "",
-    msrp: 0,
-    style: "",
-    color: "",
-    season: "",
-    hasSize: false,
-  });
-  const [skuName, setSkuName] = useState(sku.name);
-  const [skuMsrp, setSkuMsrp] = useState(sku.msrp);
-  const [skuStyle, setSkuStyle] = useState(sku.style);
-  const [skuColor, setSkuColor] = useState(sku.color);
-  const [skuSeason, setSkuSeason] = useState(sku.season);
-  const [skuHasSize, setSkuHasSize] = useState(sku.hasSize);
+  const [skuName, setSkuName] = useState("");
+  const [skuMsrp, setSkuMsrp] = useState(0);
+  const [skuStyle, setSkuStyle] = useState("");
+  const [skuColor, setSkuColor] = useState("");
+  const [skuSeason, setSkuSeason] = useState("");
+  const [skuHasSize, setSkuHasSize] = useState(false);
   const [sizes, setSizes] = useState([]);
   const [selectedSizes, setSelectedSizes] = useState("");
   const [skuId, setSkuId] = useState("");
