@@ -42,7 +42,7 @@ const Row = (props) => {
         <TableCell align="right">{row.style}</TableCell>
         <TableCell align="right">{row.color}</TableCell>
         <TableCell align="right">{row.season}</TableCell>
-        <TableCell align="right">total inventory</TableCell>
+        <TableCell align="right">{row.totalInventory}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -67,13 +67,11 @@ const Row = (props) => {
                       <TableCell>{assSize.size}</TableCell>
                       <TableCell>
                         {assSize.InventoryId ? (
-                          ""
+                          assSize.Inventory.amount
                         ) : (
-                          <Button>
-                            <Link to={`/new/inventory/${assSize.id}`}>
-                              Add Inventory
-                            </Link>
-                          </Button>
+                          <Link to={`/new/inventory/${assSize.id}`}>
+                            <Button>Add Inventory</Button>
+                          </Link>
                         )}
                       </TableCell>
 

@@ -26,6 +26,10 @@ router.get("/:sku_id", async (req, res, next) => {
   res.send(topLine);
 });
 
+router.get("/sku/:id", async (req, res, next) => {
+  res.send(await skuController.getById(req));
+});
+
 router.put("/edit/:sku_id", async (req, res, next) => {
   const skus = await SKU.findAll({ where: { sku_id: req.params.sku_id } });
   /*

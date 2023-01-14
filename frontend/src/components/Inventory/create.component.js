@@ -1,13 +1,28 @@
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useParams, redirect } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
 
 const CreateInventory = () => {
+  const { id } = useParams();
   const [inventory, setInventory] = useState("");
   const [sku, setSku] = useState({});
-  const onClick = () => {};
+  const onClick = () => {
+    axios
+      .post("/inventory/new", {
+        sku_id: sku.sku_id,
+        size: sku.SizeId,
+        amount: inventory,
+      })
+      .then(() => redirect("/sku"));
+  };
+  useEffect(() => {
+    axios.get(`/sku/sku/${id}`).then((res) => {
+      setSku(res.data);
+    });
+    //get sku
+  }, []);
   return (
     <>
       <Form>
@@ -17,7 +32,7 @@ const CreateInventory = () => {
             value={inventory}
             onChange={(e) => setInventory(e.target.value)}
             type="number"
-            placeholder="Enter name of the size"
+            placeholder="Enter starting inventory"
           />
         </Form.Group>
       </Form>

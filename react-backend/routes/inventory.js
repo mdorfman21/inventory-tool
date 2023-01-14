@@ -1,8 +1,14 @@
 const express = require("express");
 const router = express.Router();
-const InventoryController = require("../controllers/inventory_controller");
+const inventoryController = require("../controllers/inventory_controller");
 
-router.post("inventory/new", async (req, res, next) => {
-  await InventoryController.create(req);
+console.log(inventoryController);
+
+router.post("/new", async (req, res, next) => {
+  await inventoryController.create(req);
   res.send("inventory done");
 });
+
+router.put("/update/:id", async (req, res, next) => {});
+
+module.exports = router;

@@ -1,7 +1,7 @@
 const db = require("../models/index");
 const SKU = db.sku;
 const Inventory = db.inventory;
-const InventoryLog = db.inventory_log;
+const InventoryLog = db.inventoryLog;
 
 const create = async (req) => {
   const sku = await SKU.findOne({
@@ -19,7 +19,7 @@ const create = async (req) => {
     // return inventory already exists
     // inv.increment("currentRevision");
   }
-
+  await sku.update({ InventoryId: inv.id });
   await InventoryLog.create({
     amount: inv.amount,
     revision: 1,
@@ -31,4 +31,5 @@ const update = async (req) => {};
 
 module.exports = {
   create,
+  update,
 };
