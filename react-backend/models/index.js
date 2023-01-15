@@ -10,8 +10,8 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
     max: dbConfig.pool.max,
     min: dbConfig.pool.min,
     acquire: dbConfig.pool.acquire,
-    idle: dbConfig.pool.idle
-  }
+    idle: dbConfig.pool.idle,
+  },
 });
 
 const db = {};
@@ -19,10 +19,11 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 db.sku = require("./SKU.model")(sequelize, Sequelize);
 db.company = require("./Company.model")(sequelize, Sequelize);
-db.size = require('./Size.model')(sequelize, Sequelize);
-db.inventory = require('./Inventory.model')(sequelize, Sequelize);
-db.inventoryLog = require('./InventoryLog.model')(sequelize, Sequelize);
-db.sale = require('./Sale.model')(sequelize, Sequelize);
+db.size = require("./Size.model")(sequelize, Sequelize);
+db.inventory = require("./Inventory.model")(sequelize, Sequelize);
+db.inventoryLog = require("./InventoryLog.model")(sequelize, Sequelize);
+db.sale = require("./Sale.model")(sequelize, Sequelize);
+db.transaction = require("./Transaction.model")(sequelize, Sequelize);
 
 db.size.hasMany(db.sku);
 db.sku.belongsTo(db.size);
@@ -32,10 +33,11 @@ db.inventory.hasMany(db.inventoryLog);
 db.inventoryLog.belongsTo(db.inventory);
 db.sku.hasMany(db.sale);
 db.sale.belongsTo(db.sku);
+db.transaction.hasMany(db.sale);
+db.sale.belongsTo(db.transaction);
 
-
-
-db.sequelize.sync({ alter: true })
+db.sequelize
+  .sync({ alter: true })
   .then(() => {
     console.log("Synced db.");
   })
@@ -43,4 +45,4 @@ db.sequelize.sync({ alter: true })
     console.log("Failed to sync db: " + err.message);
   });
 
-  module.exports = db;
+module.exports = db;

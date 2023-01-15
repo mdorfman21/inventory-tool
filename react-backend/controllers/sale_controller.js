@@ -4,13 +4,15 @@ const SKU = db.sku;
 const Inventory = db.inventory;
 const InventoryLog = db.inventoryLog;
 const Sale = db.sale;
+const Transaction = db.transaction;
 
-const create = async ({ skuId, saleUnits, dollarAmount }) => {
+const create = async ({ skuId, saleUnits, dollarAmount, transaction }) => {
   const inventory = await Inventory.findOne({ where: { SkuId: skuId } });
   await Sale.create({
     units: saleUnits,
     dollarAmount,
     SkuId: skuId,
+    TransactionId: transaction.id,
   });
   await InventoryController.update({
     invId: inventory.id,
