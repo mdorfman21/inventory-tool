@@ -5,11 +5,18 @@ import axios from "axios";
 
 const CreateSize = () => {
   const [sizeName, setSizeName] = useState("");
+  const [file, setFile] = useState({});
 
   const onClick = () => {
     axios
       .post("/size/size", { size: sizeName })
       .then(() => console.log("done"));
+  };
+
+  const uploadClick = async () => {
+    await fetch("/upload", {
+      body: new FormData(file),
+    });
   };
 
   return (
@@ -26,6 +33,13 @@ const CreateSize = () => {
         </Form.Group>
       </Form>
       <Button onClick={onClick}>Create</Button>
+      <input
+        type="file"
+        onChange={(e) =>
+          e.target.files[0] ? setFile(e.target.files[0]) : null
+        }
+      />
+      <Button onClick={uploadClick}>Upload</Button>
     </>
   );
 };

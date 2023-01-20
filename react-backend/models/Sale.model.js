@@ -12,6 +12,9 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
       },
+      saleDate: {
+        type: Sequelize.DATE,
+      },
     },
     {
       tableName: "sale",
