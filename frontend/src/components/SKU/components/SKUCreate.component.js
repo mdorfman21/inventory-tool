@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
+import NavBar from "../../Pageframe/Navbar";
 
 const CreateSKU = () => {
   const [skuName, setSkuName] = useState("");
@@ -50,6 +51,7 @@ const CreateSKU = () => {
 
   return (
     <>
+      <NavBar />
       <h3>You are now creating a SKU</h3>
       <Form>
         <Form.Group className="mb-3" controlId="formSkuName">

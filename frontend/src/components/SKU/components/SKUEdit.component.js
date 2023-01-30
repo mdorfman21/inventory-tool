@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import NavBar from "../../Pageframe/Navbar";
 
 import axios from "axios";
 
@@ -73,6 +74,7 @@ const EditSKU = () => {
 
   return (
     <>
+      <NavBar />
       <Form>
         <Form.Group className="mb-3" controlId="formSkuName">
           <Form.Label>Name</Form.Label>

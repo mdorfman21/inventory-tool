@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
+import NavBar from "../Pageframe/Navbar";
 
 const CreateSize = () => {
   const [sizeName, setSizeName] = useState("");
@@ -14,13 +15,17 @@ const CreateSize = () => {
   };
 
   const uploadClick = async () => {
-    await fetch("/upload", {
-      body: new FormData(file),
+    const fd = new FormData();
+    fd.append("file", file);
+    fetch("/size/upload", {
+      method: "POST",
+      body: fd,
     });
   };
 
   return (
     <>
+      <NavBar />
       <Form>
         <Form.Group className="mb-3" controlId="formSizeName">
           <Form.Label>Name</Form.Label>

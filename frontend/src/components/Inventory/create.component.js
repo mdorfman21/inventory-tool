@@ -3,6 +3,7 @@ import { useParams, redirect } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
+import NavBar from "../Pageframe/Navbar";
 
 const CreateInventory = () => {
   const { id } = useParams();
@@ -25,6 +26,7 @@ const CreateInventory = () => {
   }, []);
   return (
     <>
+      <NavBar />
       <Form>
         <Form.Group className="mb-3" controlId="formSizeName">
           <Form.Label>Inventory</Form.Label>
